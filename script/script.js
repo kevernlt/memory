@@ -14,6 +14,17 @@ function shuffle(array){
         const j =Math.floor(Math.random()*i);
         [array[i], array[j]] = [array[j], array[i]];
     }
-    return array;
 }
-console.table(shuffle(cards));
+function initGame(){
+    shuffle(cards);
+    cards.forEach((element) => {
+        const div = document.createElement("div");
+        div.classList.add("card");
+        div.dataset.value = element;
+        div.role='button';
+        div.tabIndex='0';
+        document.getElementById("game-board").appendChild(div);
+    })
+}
+
+initGame();
