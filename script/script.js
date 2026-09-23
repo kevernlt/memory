@@ -6,6 +6,7 @@ let img = [];
 const board = document.getElementById("game-board");
 const timerDisplay = document.getElementById("timer");
 const scoreBoard = document.getElementById("score");
+const resetButton = document.getElementById("reset");
 
 //game variables
 let firstCard = null;
@@ -84,6 +85,7 @@ function checkMatch() {
 
 //game initialisation
 function initGame() {
+    clearInterval(timerID);
     scoreBoard.textContent = "score : "+score;
     board.innerHTML="";
     moves = 0;
@@ -91,6 +93,7 @@ function initGame() {
     seconds=0;
     startTimer();
     shuffle(cards);
+    resetButton.addEventListener('click',()=>resetGame());
     cards.forEach((element) => {
         const card = document.createElement("div");
         card.classList.add("card");
@@ -113,7 +116,6 @@ function startTimer() {
     timerID = setInterval(() => {
         seconds++;
         timerDisplay.textContent = formatTime(seconds);
-        console.log(formatTime(seconds));
     }, 1000)
 }
 
@@ -125,5 +127,8 @@ function checkVictory(){
     }
 }
 
+function resetGame(){
+    initGame();
+}
+
 initGame();
-startTimer();
