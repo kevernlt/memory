@@ -1,7 +1,12 @@
+main{
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
+}
+
 .card{
     flex-wrap: wrap;
-    min-width: 100px;
-    min-height: 100px;
+    width: 150px;
+    height: 150px;
     border:solid 1px gray;
     border-radius: 5px;
     margin: 0.2rem;

@@ -4,6 +4,8 @@ let img = [];
 
 //DOM variables
 const board = document.getElementById("game-board");
+const timerDisplay = document.getElementById("timer");
+const scoreBoard = document.getElementById("score");
 
 //game variables
 let firstCard = null;
@@ -11,6 +13,11 @@ let secondCard;
 let lockBoard = false;
 let moves = 0;
 let matchedCount = 0;
+let seconds = 0;
+let timerInterval = null;
+let timerID;
+let score = 0;
+
 
 //URL generator
 for (let i = 0; i < 8; i++) {
@@ -59,12 +66,14 @@ function checkMatch() {
         lockBoard = false;
         firstCard = null;
         secondCard = null;
+        checkVictory();
     } else {
         setTimeout(() => {
             firstCard.innerHTML = "";
             secondCard.innerHTML = "";
             firstCard.dataset.flip = "false";
             secondCard.dataset.flip = "false";
+            matchedCount+=2;
             lockBoard = false;
             firstCard = null;
             secondCard = null;
@@ -75,6 +84,12 @@ function checkMatch() {
 
 //game initialisation
 function initGame() {
+    scoreBoard.textContent = "score : "+score;
+    board.innerHTML="";
+    moves = 0;
+    matchedCount = 0;
+    seconds=0;
+    startTimer();
     shuffle(cards);
     cards.forEach((element) => {
         const card = document.createElement("div");
@@ -88,4 +103,27 @@ function initGame() {
     })
 }
 
+function formatTime(sec) {
+    let min = Math.floor(sec / 60);
+    let seco = sec % 60;
+    return min.toString().padStart(2,0) + ":" + seco.toString().padStart(2,0);
+}
+
+function startTimer() {
+    timerID = setInterval(() => {
+        seconds++;
+        timerDisplay.textContent = formatTime(seconds);
+        console.log(formatTime(seconds));
+    }, 1000)
+}
+
+function checkVictory(){
+    if(matchedCount === cards.length){
+        score++;
+        clearInterval(timerID);
+        scoreBoard.textContent = "score : "+score;
+    }
+}
+
 initGame();
+startTimer();
