@@ -7,6 +7,10 @@ const board = document.getElementById("game-board");
 const timerDisplay = document.getElementById("timer");
 const scoreBoard = document.getElementById("score");
 const resetButton = document.getElementById("reset");
+const movesDisplay = document.getElementById("moves");
+const matchedDisplay = document.getElementById("matches");
+const winnerDisplay = document.getElementsByClassName("winnerBoard")[0];
+const victory = document.getElementById("victory");
 
 //game variables
 let firstCard = null;
@@ -22,7 +26,7 @@ let score = 0;
 
 //URL generator
 for (let i = 0; i < 8; i++) {
-    const imgStart = Math.floor(Math.random() * 100) + 1;
+    const imgStart = Math.floor(Math.random() * 300) + 1;
     const url = `https://picsum.photos/id/${imgStart}/${dimension}`;
     img.push(url);
 }
@@ -52,7 +56,6 @@ function handleCardClick(card) {
                 secondCard = card;
                 card.innerHTML = `<img src=${card.dataset.value}>`;
                 lockBoard = true;
-                moves++;
                 checkMatch();
             }
         }
@@ -67,7 +70,7 @@ function checkMatch() {
         lockBoard = false;
         firstCard = null;
         secondCard = null;
-        matchedCount+=2;
+        matchedCount++;
         checkVictory();
     } else {
         setTimeout(() => {
@@ -79,15 +82,19 @@ function checkMatch() {
             firstCard = null;
             secondCard = null;
         }, 800);
-
     }
+    moves++;
+    movesDisplay.textContent = moves;
+    matchedDisplay.textContent = matchedCount;
 }
 
 //game initialisation
 function initGame() {
     clearInterval(timerID);
-    scoreBoard.textContent = "score : "+score;
+    scoreBoard.textContent = "Score : "+score;
     board.innerHTML="";
+    winnerDisplay.className="winnerBoard";
+    victory.textContent="";
     moves = 0;
     matchedCount = 0;
     seconds=0;
@@ -123,10 +130,12 @@ function startTimer() {
 
 //checking if every card is flipped and have being matched with their pairs
 function checkVictory(){
-    if(matchedCount == cards.length){
+    if(matchedCount == (cards.length / 2)){
         score++;
         clearInterval(timerID);
-        scoreBoard.textContent = "score : "+score;
+        scoreBoard.textContent = "Score : "+score;
+        winnerDisplay.classList.add("winner");
+        victory.innerHTML = "You won !<br>";
     }
 }
 

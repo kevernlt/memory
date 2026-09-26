@@ -15,6 +15,11 @@ h1, footer, div{
     
 }
 
+div{
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
 .card{
     background: linear-gradient(to top left, lightblue,lightpink);
     width: 150px;
@@ -24,10 +29,30 @@ h1, footer, div{
     margin: 0.2rem;
 }
 
+.matched{
+    border:solid 3px green;
+}
+
 button{
     justify-content: center;
 }
 
 img{
-    border-radius: 10px;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+footer{
+    margin-top: 1rem;
+}
+
+.winnerBoard{
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}
+
+.winner{
+    color: green;
+    font-weight: bold;
 }
