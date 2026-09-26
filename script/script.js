@@ -67,6 +67,7 @@ function checkMatch() {
         lockBoard = false;
         firstCard = null;
         secondCard = null;
+        matchedCount+=2;
         checkVictory();
     } else {
         setTimeout(() => {
@@ -74,7 +75,6 @@ function checkMatch() {
             secondCard.innerHTML = "";
             firstCard.dataset.flip = "false";
             secondCard.dataset.flip = "false";
-            matchedCount+=2;
             lockBoard = false;
             firstCard = null;
             secondCard = null;
@@ -106,12 +106,14 @@ function initGame() {
     })
 }
 
+//formating seconds into mm:ss
 function formatTime(sec) {
     let min = Math.floor(sec / 60);
     let seco = sec % 60;
     return min.toString().padStart(2,0) + ":" + seco.toString().padStart(2,0);
 }
 
+//starting timer
 function startTimer() {
     timerID = setInterval(() => {
         seconds++;
@@ -119,8 +121,9 @@ function startTimer() {
     }, 1000)
 }
 
+//checking if every card is flipped and have being matched with their pairs
 function checkVictory(){
-    if(matchedCount === cards.length){
+    if(matchedCount == cards.length){
         score++;
         clearInterval(timerID);
         scoreBoard.textContent = "score : "+score;
